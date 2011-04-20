@@ -128,12 +128,12 @@
 <author initials='S' surname='Perreault' fullname='Simon Perreault'>
     <organization />
 </author>
-<date month='April' day='6' year='2011' />
+<date month='April' day='9' year='2011' />
 <abstract><t>This document defines the vCard data format for representing and exchanging a variety of information about individuals and other entities (e.g., formatted and structured name and delivery addresses, email address, multiple telephone numbers, photograph, logo, audio clips, etc.).</t></abstract>
 </front>
-<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardrev-17' />
+<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardrev-19' />
 <format type='TXT'
-        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardrev-17.txt' />
+        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardrev-19.txt' />
 </reference>
 
     </references>
@@ -146,12 +146,12 @@
 <author initials='S' surname='Perreault' fullname='Simon Perreault'>
     <organization />
 </author>
-<date month='April' day='6' year='2011' />
+<date month='April' day='9' year='2011' />
 <abstract><t>This document defines the XML schema of the vCard data format.</t></abstract>
 </front>
-<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardxml-08' />
+<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardxml-09' />
 <format type='TXT'
-        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardxml-08.txt' />
+        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardxml-09.txt' />
 </reference>
 
 <reference anchor='XMPP'>
