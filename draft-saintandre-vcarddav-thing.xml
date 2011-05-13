@@ -5,7 +5,7 @@
 <?rfc symrefs="yes"?>
 <?rfc toc="yes"?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-saintandre-vcarddav-thing-00" ipr="trust200902">
+<rfc category="std" docName="draft-saintandre-vcarddav-thing-01" ipr="trust200902">
 
   <front>
     <title abbrev="vCard KIND:thing">vCard KIND:thing</title>
@@ -23,43 +23,51 @@
         <email>psaintan@cisco.com</email>
       </address>
     </author>
-    <date year="2011" month="April" day="20"/>
+    <date year="2011" month="May" day="12"/>
     <keyword>vCard</keyword>
     <abstract>
-      <t>This document defines a value of "thing" for the vCard KIND property.</t>
+      <t>This document defines a value of "thing" for the vCard KIND property so that vCards can be used to represent physical objects and software applications.</t>
     </abstract>
   </front>
 
   <middle>
 
     <section title="Introduction" anchor="intro">
-      <t>Version 4 of the vCard specification <xref target='VCARD'/> defines a new KIND property that specifies the type of entity that a vCard represents.  During working group discussion of that specification, the "thing" value of the KIND property was removed, with the expectation that the value might be defined in a vCard extension.  This document defines such an extension.</t>
+      <t>Version 4 of the vCard specification <xref target='VCARD'/> defines a new KIND property for the type of entity that a vCard represents.  The "thing" value of the KIND property was removed from that specification, with the expectation it might be defined in a vCard extension.  This document defines such an extension so that vCards can be used to represent things like physical objects and software applications.</t>
     </section>
 
     <section title="Meaning" anchor="meaning">
-      <t>When the KIND property has a value of "thing", the vCard represents a software application (e.g.,a server, a chatroom, or a bot) or a physical object (e.g., a building or a machine).  As one example of the "thing" KIND, vCards are currently used in the Extensible Messaging and Presence Protocol <xref target='XMPP'/> to represent instant messaging servers that are deployed on the network.</t>
-      <t>All properties in a thing's vCard apply to one of the following:</t>
+      <t>When the KIND property has a value of "thing", the vCard represents a physical object (e.g., a building, a vehicle, or a machine) or a software application (e.g., an application server, client, or bot).  As one example of the "thing" KIND, vCards are currently used in the Extensible Messaging and Presence Protocol <xref target='XMPP'/> to represent instant messaging servers that are deployed on the network.</t>
+      <t>Although it might be desirable to define a more fine-grained taxonomy of things (e.g., a KIND of "thing" with a subtype of "vehicle"), such a taxonomy is out of scope for this document.</t>
+      <t>The following base properties make sense for vCards that represent things (this list is not exhaustive, and other properties might be applicable as well):</t>
       <t>
         <list style='symbols'>
-          <t>The thing itself (e.g., the FN property might represent the friendly name of an application service, the URL property might represent a website that contains further information about the service, and the ADR, GEO, and TZ properties might represent the physical address, geographical location, and timezone of the machine where the service is hosted).</t>
-          <t>An organization or person that owns the thing (e.g., the LOGO property might represent the corporate logo of a service provider).</t>
-          <t>A person or role that controls the thing (e.g., the TEL, EMAIL, and IMPP properties might represent ways to contact a server administrator).</t>
+          <t>ADR</t>
+          <t>EMAIL</t>
+          <t>FN</t>
+          <t>GEO</t>
+          <t>IMPP</t>
+          <t>KEY</t>
+          <t>KIND</t>
+          <t>LANG</t>
+          <t>LOGO</t>
+          <t>NOTE</t>
+          <t>ORG</t>
+          <t>PHOTO</t>
+          <t>REV</t>
+          <t>SOURCE</t>
+          <t>TEL</t>
+          <t>TZ</t>
+          <t>URL</t>
         </list>
       </t>
-      <t>The following base properties make sense for vCards that represent things (this list is not exclusive, and other properties might be applicable as well):</t>
+      <t>Because things do not have work places and personal lives, it makes no sense to use the "work" and "home" values of the TYPE parameter in a thing's vCard (see Section 5.6 of <xref target='VCARD'/>).</t>
+      <t>The properties in a thing's vCard apply to one of the following:</t>
       <t>
         <list style='symbols'>
-          <t>FN</t>
-          <t>ADR</t>
-          <t>TEL</t>
-          <t>EMAIL</t>
-          <t>IMPP</t>
-          <t>LANG</t>
-          <t>TZ</t>
-          <t>GEO</t>
-          <t>LOGO</t>
-          <t>URL</t>
-          <t>KEY</t>
+          <t>The thing itself (e.g., the FN property might represent the friendly name of an application service, the URL property might represent a website that contains further information about the service, and the ADR, GEO, and TZ properties might represent the physical address, geographical location, and timezone of the machine where the service is hosted).<vspace blankLines='1'/></t>
+          <t>An organization or person that owns the thing (e.g., the LOGO property might represent the corporate logo of a service provider).<vspace blankLines='1'/></t>
+          <t>A person or role that controls the thing (e.g., the TEL, EMAIL, and IMPP properties might represent ways to contact a server administrator).</t>
         </list>
       </t>
     </section>
@@ -69,51 +77,39 @@
       <figure>
         <artwork><![CDATA[
 <vcard xmlns="urn:ietf:params:xml:ns:vcard-4.0"> 
-  <vcards> 
-    <fn><text>jabber.org IM service</text></fn>
-    <url><uri>http://www.jabber.org/</uri></url>
-    <lang>
-      <parameters><pref>1</pref></parameters>
-      <language-tag>en</language-tag>
-    </lang>
-    <email>
-      <parameters><type><text>work</text></type></parameters>
-      <text>xmpp@jabber.org</text>
-    </email>
-    <impp>
-      <parameters><type><text>work</text></type></parameters>
-      <uri>xmpp:jabber.org</uri>
-    </impp>
-    <logo>
-      <parameters><type><text>work</text></type></parameters>
-      <uri>http://www.jabber.org/images/logo.png</uri>
-    </logo>
-    <geo>
-      <parameters><type><text>work</text></type></parameters>
-      <uri>geo:42.25,-91.05</uri>
-    </geo>
-    <tz><text>America/Chicago</text></tz>
-    <kind><text>thing</text></kind>
-  </vcard>
-</vcards>
+  <fn><text>jabber.org IM service</text></fn>
+  <url><uri>http://www.jabber.org/</uri></url>
+  <lang>
+    <parameters><pref>1</pref></parameters>
+    <language-tag>en</language-tag>
+  </lang>
+  <email><text>xmpp@jabber.org</text></email>
+  <impp><uri>xmpp:jabber.org</uri></impp>
+  <logo><uri>http://www.jabber.org/images/logo.png</uri></logo>
+  <geo><uri>geo:42.25,-91.05</uri></geo>
+  <tz><text>America/Chicago</text></tz>
+  <source><uri>xmpp:jabber.org?vcard</uri></source>
+  <rev><timestamp>19990104T122100Z</timestamp></rev>
+  <kind><text>thing</text></kind>
+</vcard>
         ]]></artwork>
       </figure>
     </section>
 
     <section title="IANA Considerations" anchor="iana">
-      <t>The IANA is requested to add "thing" to the registry of property values for vCard4.  In conformance with Section 10.2.6 of <xref target='VCARD'/>, the registration is as follows, where the reference is to &rfc.number;.</t>
+      <t>The IANA is requested to add "thing" to the registry of property values for vCard4.  In conformance with Section 10.2.6 of <xref target='VCARD'/>, the registration is as follows, where the reference is to RFC&rfc.number;.</t>
       <t>
         <list style='hanging'>
           <t hangText='Value:'>thing</t>
-          <t hangText='Purpose:'>The object represented by the vCard is an automated entity, such as a software application or a physical object.</t>
+          <t hangText='Purpose:'>The entity represented by the vCard is a physical object (e.g., a building, a vehicle, or a machine) or a software application (e.g., an application server, client, or bot).</t>
           <t hangText='Conformance:'>This value can be used with the "KIND" property.</t>
-          <t hangText='Example:'>See Section 3 of &rfc.number;.</t>
+          <t hangText='Example:'>See Section 3 of RFC&rfc.number;.</t>
         </list>
       </t>
     </section>
 
     <section title="Security Considerations" anchor="security">
-      <t>Use of vCards to represent non-human entities is not envisioned to introduce security considerations beyond those specified for vCards in general as described in <xref target='VCARD'/>.</t>
+      <t>Use of vCards to represent physical objects and software applications is not envisioned to introduce security considerations beyond those specified for vCards in <xref target='VCARD'/>.</t>
     </section>
 
   </middle>
