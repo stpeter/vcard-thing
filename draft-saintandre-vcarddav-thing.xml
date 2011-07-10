@@ -5,10 +5,10 @@
 <?rfc symrefs="yes"?>
 <?rfc toc="yes"?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-saintandre-vcarddav-thing-01" ipr="trust200902">
+<rfc category="std" docName="draft-saintandre-vcarddav-thing-02" ipr="trust200902">
 
   <front>
-    <title abbrev="vCard KIND:thing">vCard KIND:thing</title>
+    <title abbrev="vCard KIND:application">vCard KIND:application</title>
     <author initials="P." surname="Saint-Andre" fullname="Peter Saint-Andre">
       <organization>Cisco</organization>
       <address>
@@ -23,23 +23,31 @@
         <email>psaintan@cisco.com</email>
       </address>
     </author>
-    <date year="2011" month="May" day="12"/>
+    <date year="2011" month="July" day="10"/>
     <keyword>vCard</keyword>
     <abstract>
-      <t>This document defines a value of "thing" for the vCard KIND property so that vCards can be used to represent physical objects and software applications.</t>
+      <t>This document defines a value of "application" for the vCard KIND property so that vCards can be used to represent software applications.</t>
     </abstract>
   </front>
 
   <middle>
 
     <section title="Introduction" anchor="intro">
-      <t>Version 4 of the vCard specification <xref target='VCARD'/> defines a new KIND property for the type of entity that a vCard represents.  The "thing" value of the KIND property was removed from that specification, with the expectation it might be defined in a vCard extension.  This document defines such an extension so that vCards can be used to represent things like physical objects and software applications.</t>
+      <t>Version 4 of the vCard specification <xref target='VCARD'/> defines a new "KIND" property to specify the type of entity that a vCard represents.  During its work on the base vCard4 specification, the VCARDDAV Working Group defined values of "individual", "organization", "group", and "location" for the KIND property.  The working group considered but then removed a value of "thing" to represent any type of physical entity, machine, software application, etc., with the expectation that such a value might be defined in a vCard extension.  This document does not define a generic "thing" value, but instead defines a more narrow "application" value so that vCards can be used to represent software applications.</t>
     </section>
 
     <section title="Meaning" anchor="meaning">
-      <t>When the KIND property has a value of "thing", the vCard represents a physical object (e.g., a building, a vehicle, or a machine) or a software application (e.g., an application server, client, or bot).  As one example of the "thing" KIND, vCards are currently used in the Extensible Messaging and Presence Protocol <xref target='XMPP'/> to represent instant messaging servers that are deployed on the network.</t>
-      <t>Although it might be desirable to define a more fine-grained taxonomy of things (e.g., a KIND of "thing" with a subtype of "vehicle"), such a taxonomy is out of scope for this document.</t>
-      <t>The following base properties make sense for vCards that represent things (this list is not exhaustive, and other properties might be applicable as well):</t>
+      <t>When the KIND property has a value of "application", the vCard represents a software application such as a server, an online service (e.g., a chatroom), or an automated software bot.  More formally, an "application" is functionally equivalent to the 'applicationProcess' object class used in the Lightweight Directory Access Protocol <xref target='RFC4519'/> and derived from the Open Systems Interconnection model <xref target='X.521'/> and <xref target='X.200'/>.  As one example of the "application" KIND, vCards are currently used in the Extensible Messaging and Presence Protocol <xref target='RFC6120'/> to represent instant messaging servers that are deployed on the network.</t>
+      <t>The properties included in an application's vCard apply to one of the following:</t>
+      <t>
+        <list style='symbols'>
+          <t>The application itself (e.g., the FN property might represent the friendly name of an application service, the URL property might represent a website that contains further information about the service, and the ADR, GEO, and TZ properties might represent the physical address, geographical location, and timezone of the machine where the service is hosted).<vspace blankLines='1'/></t>
+          <t>An organization or person that makes the application available on the network (e.g., the LOGO property might represent the corporate logo of a service provider).<vspace blankLines='1'/></t>
+          <t>A person or role that maintains the application (e.g., the TEL, EMAIL, and IMPP properties might represent ways to contact a server administrator).</t>
+        </list>
+      </t>
+      <t>Because software applications do not have work places and personal lives, it makes no sense to include the "work" and "home" values of the TYPE parameter in an application's vCard (see Section 5.6 of <xref target='VCARD'/>).</t>
+      <t>The following base properties make sense for vCards that represent software applications (this list is not exhaustive, and other properties might be applicable as well):</t>
       <t>
         <list style='symbols'>
           <t>ADR</t>
@@ -61,19 +69,11 @@
           <t>URL</t>
         </list>
       </t>
-      <t>Because things do not have work places and personal lives, it makes no sense to use the "work" and "home" values of the TYPE parameter in a thing's vCard (see Section 5.6 of <xref target='VCARD'/>).</t>
-      <t>The properties in a thing's vCard apply to one of the following:</t>
-      <t>
-        <list style='symbols'>
-          <t>The thing itself (e.g., the FN property might represent the friendly name of an application service, the URL property might represent a website that contains further information about the service, and the ADR, GEO, and TZ properties might represent the physical address, geographical location, and timezone of the machine where the service is hosted).<vspace blankLines='1'/></t>
-          <t>An organization or person that owns the thing (e.g., the LOGO property might represent the corporate logo of a service provider).<vspace blankLines='1'/></t>
-          <t>A person or role that controls the thing (e.g., the TEL, EMAIL, and IMPP properties might represent ways to contact a server administrator).</t>
-        </list>
-      </t>
+      <t>Although it might be desirable to define a more fine-grained taxonomy of applications (e.g., a KIND of "application" with a subtype of "server" or "IM server"), such a taxonomy is out of scope for this document.</t>
     </section>
 
     <section title="Example" anchor="example">
-      <t>The following example of an XMPP server is borrowed from <xref target='XMPP-VCARD'/> and uses the XML representation of vCard described in <xref target='VCARDXML'/>.</t>
+      <t>The following example of an XMPP server is borrowed from <xref target='XEP-0292'/> and uses the XML representation of vCard described in <xref target='VCARDXML'/>.</t>
       <figure>
         <artwork><![CDATA[
 <vcard xmlns="urn:ietf:params:xml:ns:vcard-4.0"> 
@@ -90,26 +90,31 @@
   <tz><text>America/Chicago</text></tz>
   <source><uri>xmpp:jabber.org?vcard</uri></source>
   <rev><timestamp>19990104T122100Z</timestamp></rev>
-  <kind><text>thing</text></kind>
+  <kind><text>application</text></kind>
 </vcard>
         ]]></artwork>
       </figure>
     </section>
 
     <section title="IANA Considerations" anchor="iana">
-      <t>The IANA is requested to add "thing" to the registry of property values for vCard4.  In conformance with Section 10.2.6 of <xref target='VCARD'/>, the registration is as follows, where the reference is to RFC&rfc.number;.</t>
+      <t>The IANA is requested to add "application" to the registry of property values for vCard4.  In conformance with Section 10.2.6 of <xref target='VCARD'/>, the registration is as follows, where the reference is to RFC&rfc.number;.</t>
       <t>
         <list style='hanging'>
-          <t hangText='Value:'>thing</t>
-          <t hangText='Purpose:'>The entity represented by the vCard is a physical object (e.g., a building, a vehicle, or a machine) or a software application (e.g., an application server, client, or bot).</t>
+          <t hangText='Value:'>application</t>
+          <t hangText='Purpose:'>The entity represented by the vCard is a software application (e.g., a server, an online service such as a chatroom, or an automated software bot).</t>
           <t hangText='Conformance:'>This value can be used with the "KIND" property.</t>
           <t hangText='Example:'>See Section 3 of RFC&rfc.number;.</t>
         </list>
       </t>
+      <t>[[NOTE TO RFC EDITOR: Please change &rfc.number; to the number assigned to this specification, and remove this paragraph on publication.]]</t>
     </section>
 
     <section title="Security Considerations" anchor="security">
       <t>Use of vCards to represent physical objects and software applications is not envisioned to introduce security considerations beyond those specified for vCards in <xref target='VCARD'/>.</t>
+    </section>
+
+    <section title="Acknowledgements" anchor="acks">
+      <t>Thanks to Cyrus Daboo, Barry Leiba, Kepeng Li, and Simon Perreault for their feedback.</t>
     </section>
 
   </middle>
@@ -124,33 +129,31 @@
 <author initials='S' surname='Perreault' fullname='Simon Perreault'>
     <organization />
 </author>
-<date month='April' day='9' year='2011' />
+<date month='May' day='26' year='2011' />
 <abstract><t>This document defines the vCard data format for representing and exchanging a variety of information about individuals and other entities (e.g., formatted and structured name and delivery addresses, email address, multiple telephone numbers, photograph, logo, audio clips, etc.).</t></abstract>
 </front>
-<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardrev-19' />
+<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardrev-22' />
 <format type='TXT'
-        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardrev-19.txt' />
+        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardrev-22.txt' />
 </reference>
 
     </references>
 
     <references title="Informative References">
 
-<reference anchor='VCARDXML'>
+<reference anchor='RFC4519'>
 <front>
-<title>vCard XML Representation</title>
-<author initials='S' surname='Perreault' fullname='Simon Perreault'>
-    <organization />
-</author>
-<date month='April' day='9' year='2011' />
-<abstract><t>This document defines the XML schema of the vCard data format.</t></abstract>
-</front>
-<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardxml-09' />
-<format type='TXT'
-        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardxml-09.txt' />
+<title>Lightweight Directory Access Protocol (LDAP): Schema for User Applications</title>
+<author initials='A.' surname='Sciberras' fullname='A. Sciberras'>
+<organization /></author>
+<date year='2006' month='June' />
+<abstract>
+<t>This document is an integral part of the Lightweight Directory Access Protocol (LDAP) technical specification.  It provides a technical specification of attribute types and object classes intended for use by LDAP directory clients for many directory services, such as White Pages.  These objects are widely used as a basis for the schema in many LDAP directories.  This document does not cover attributes used for the administration of directory servers, nor does it include directory objects defined for specific uses in other documents. [STANDARDS-TRACK]</t></abstract></front>
+<seriesInfo name='RFC' value='4519' />
+<format type='TXT' octets='64996' target='http://www.rfc-editor.org/rfc/rfc4519.txt' />
 </reference>
 
-<reference anchor='XMPP'>
+<reference anchor='RFC6120'>
 <front>
 <title>Extensible Messaging and Presence Protocol (XMPP): Core</title>
 <author initials='P.' surname='Saint-Andre' fullname='P. Saint-Andre'>
@@ -162,22 +165,60 @@
 <format type='TXT' octets='451942' target='http://www.rfc-editor.org/rfc/rfc6120.txt' />
 </reference>
 
-<reference anchor="XMPP-VCARD">
+<reference anchor='VCARDXML'>
+<front>
+<title>vCard XML Representation</title>
+<author initials='S' surname='Perreault' fullname='Simon Perreault'>
+    <organization />
+</author>
+<date month='May' day='26' year='2011' />
+<abstract><t>This document defines the XML schema of the vCard data format.</t></abstract>
+</front>
+<seriesInfo name='Internet-Draft' value='draft-ietf-vcarddav-vcardxml-11' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-vcarddav-vcardxml-11.txt' />
+</reference>
+
+<reference anchor="X.200">
+<front>
+<title>Information Technology - Open Systems Interconnection - Basic Reference Model: The Basic Model</title>
+<author>
+<organization>International Telecommunications Union</organization>
+</author>
+<date month="February" year="2001" />
+</front>
+<seriesInfo name="ITU-T" value="Recommendation X.521" />
+<seriesInfo name="ISO" value="Standard 9594-7" />
+</reference>
+
+<reference anchor="X.521">
+<front>
+<title>Information Technology - Open Systems Interconnection - The Directory: Selected Object Classes</title>
+<author>
+<organization>International Telecommunications Union</organization>
+</author>
+<date month="July" year="1994" />
+</front>
+<seriesInfo name="ITU-T" value="Recommendation X.200" />
+<seriesInfo name="ISO" value="Standard 7498-1" />
+</reference>
+
+<reference anchor="XEP-0292">
   <front>
-    <title>vCard4 Over XMPP</title>
-    <author initials="S." surname="Mizzi" fullname="Samantha Mizzi">
-      <organization/>
-      <address>
-        <email>samizzi@cisco.com</email>
-      </address>
-    </author>
+    <title>vCard4 over XMPP</title>
     <author initials="P." surname="Saint-Andre" fullname="Peter Saint-Andre">
       <organization/>
       <address>
         <email>stpeter@jabber.org</email>
       </address>
     </author>
-    <date day="07" month="April" year="2011"/>
+    <author initials="S." surname="Mizzi" fullname="Samantha Mizzi">
+      <organization/>
+      <address>
+        <email>samizzi@cisco.com</email>
+      </address>
+    </author>
+    <date day="10" month="July" year="2011"/>
   </front>
   <seriesInfo name="XSF XEP" value="0292"/>
   <format type="HTML" target="http://xmpp.org/extensions/xep-0292.html"/>
