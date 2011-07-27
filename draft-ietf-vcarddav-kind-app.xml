@@ -5,7 +5,7 @@
 <?rfc symrefs="yes"?>
 <?rfc toc="yes"?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-saintandre-vcarddav-thing-02" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-vcarddav-kind-app-00" ipr="trust200902">
 
   <front>
     <title abbrev="vCard KIND:application">vCard KIND:application</title>
@@ -23,7 +23,7 @@
         <email>psaintan@cisco.com</email>
       </address>
     </author>
-    <date year="2011" month="July" day="10"/>
+    <date year="2011" month="July" day="27"/>
     <keyword>vCard</keyword>
     <abstract>
       <t>This document defines a value of "application" for the vCard KIND property so that vCards can be used to represent software applications.</t>
@@ -37,7 +37,7 @@
     </section>
 
     <section title="Meaning" anchor="meaning">
-      <t>When the KIND property has a value of "application", the vCard represents a software application such as a server, an online service (e.g., a chatroom), or an automated software bot.  More formally, an "application" is functionally equivalent to the 'applicationProcess' object class used in the Lightweight Directory Access Protocol <xref target='RFC4519'/> and derived from the Open Systems Interconnection model <xref target='X.521'/> and <xref target='X.200'/>.  As one example of the "application" KIND, vCards are currently used in the Extensible Messaging and Presence Protocol <xref target='RFC6120'/> to represent instant messaging servers that are deployed on the network.</t>
+      <t>When the KIND property has a value of "application", the vCard represents a software application such as a server, an online service (e.g., a chatroom), or an automated software bot.  More formally, an "application" is functionally equivalent to the 'applicationProcess' object class used in the Lightweight Directory Access Protocol <xref target='RFC4519'/> as derived from the Open Systems Interconnection model <xref target='X.521'/> and <xref target='X.200'/>.  As one example of the "application" KIND, vCards are currently used in the Extensible Messaging and Presence Protocol <xref target='RFC6120'/> to represent instant messaging servers that are deployed on the network.</t>
       <t>The properties included in an application's vCard apply to one of the following:</t>
       <t>
         <list style='symbols'>
@@ -46,7 +46,7 @@
           <t>A person or role that maintains the application (e.g., the TEL, EMAIL, and IMPP properties might represent ways to contact a server administrator).</t>
         </list>
       </t>
-      <t>Because software applications do not have work places and personal lives, it makes no sense to include the "work" and "home" values of the TYPE parameter in an application's vCard (see Section 5.6 of <xref target='VCARD'/>).</t>
+      <t>When a property represents some aspect of the application itself, it makes no sense to include the "work" and "home" values of the TYPE parameter since software applications do not have work places and personal lives (see the definition of the TYPE parameter in Section 5.6 of <xref target='VCARD'/>).  When a property represents information about an individual associated with the application (e.g., an individual service administrator as opposed to a generic service administrator role or an associated organization), inclusion of the "work" and "home" values can be appropriate.</t>
       <t>The following base properties make sense for vCards that represent software applications (this list is not exhaustive, and other properties might be applicable as well):</t>
       <t>
         <list style='symbols'>
@@ -110,7 +110,7 @@
     </section>
 
     <section title="Security Considerations" anchor="security">
-      <t>Use of vCards to represent physical objects and software applications is not envisioned to introduce security considerations beyond those specified for vCards in <xref target='VCARD'/>.</t>
+      <t>Use of vCards to represent software applications is not envisioned to introduce security considerations beyond those specified for vCards in general as described in <xref target='VCARD'/>.</t>
     </section>
 
     <section title="Acknowledgements" anchor="acks">
